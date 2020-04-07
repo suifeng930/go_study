@@ -53,4 +53,35 @@ func main() {
 	fold := strings.EqualFold("abd", "Abd")
 	fmt.Printf("fold=%v \n", fold)
 
+	//11. 返回子串在字符串最后一次出现的index,如果没有返回 -1
+	lastIndex := strings.LastIndex("go goland", "go")
+	fmt.Printf("index= %v \n ", lastIndex)
+
+	//12. 将指定的子串替换成，另外一个子串，
+	replaceStr := strings.Replace("go go chongqing", "go", "重庆", 1)
+	fmt.Println("replaceStr", replaceStr)
+
+	//13. 按照指定的字符串，以 "，"为分隔符，将一个字符串拆分成字符串数组
+	splitString := strings.Split("Hello,world,ni,hao,chongqing", ",")
+	for i := 0; i < len(splitString); i++ {
+		fmt.Printf("str[%v]=%v \n", i, splitString[i])
+	}
+
+	//14. 将字符串的字母进行大小写的转换
+	strLower := "goland Hello"
+	toLower := strings.ToLower(strLower)
+	fmt.Printf("toLower= %v \n ", toLower)
+
+	//15. 将字符串左右两边的空格去掉，
+	trimSpace := strings.TrimSpace(" Hello go developer go goland ")
+	fmt.Printf("trimSpace= %q \n ", trimSpace)
+
+	//16.  将字符串左右两边的指定字符去掉
+	trim := strings.Trim(" !hello world ! ", " !")
+	fmt.Printf("trim= %q \n ", trim)
+
+	//17. 判断字符串是否以执行的字符串开头
+	hasPrefix := strings.HasPrefix("Http://127.0.0.1", "Http")
+	fmt.Printf("hasPrefix= %v \n ", hasPrefix)
+
 }
