@@ -24,4 +24,24 @@ func main() {
 	arrStr[0] = '爱'
 	StrCN = string(arrStr)
 	fmt.Println("使用rune 转换中文字符串", StrCN)
+
+	// 测试fbn（）方法
+
+	fbnSlice := fbn(10)
+	fmt.Println(fbnSlice)
+}
+
+//编写一个函数 fbn( n  int)  要求完成：
+//1. 可以接受一个 n int
+//2. 能够将斐波那契数列放到切片中
+//3. 提示，斐波那契数列的数列形式  arr[0]=1 arr[1]=1 arr[2]=2 arr[3]=3 arr[4]=5 arr[5]=8
+func fbn(n int) []uint64 {
+
+	fbnSlice := make([]uint64, n)
+	fbnSlice[0] = 1
+	fbnSlice[1] = 1
+	for i := 2; i < n; i++ {
+		fbnSlice[i] = fbnSlice[i-1] + fbnSlice[i-2]
+	}
+	return fbnSlice
 }
