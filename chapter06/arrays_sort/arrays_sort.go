@@ -20,6 +20,9 @@ func main() {
 	var intArrays [5]int = [5]int{24, 58, 76, 54, 23}
 	BubbleSort(&intArrays)
 
+	var findArrays [5]int = [5]int{1, 34, 666, 756, 849}
+	BinaryFind(&findArrays, 0, len(findArrays)-1, 756)
+
 }
 
 //冒泡demo  将下面的数组24，59，76，12，74
@@ -38,4 +41,32 @@ func BubbleSort(arr *[5]int) {
 		fmt.Printf("the %d sort :%v\n ", j, *arr)
 	}
 	fmt.Println("after sort: ", *arr)
+}
+
+// 查找    顺序查找 、  二分查找(要求数组是有序的)
+
+//  有一个数列， 白眉鹰王 、 金毛狮王、紫衫龙王、青翼福王
+//  猜数与游戏： 从键盘中任意输入一个字符，判断数列中是否包含测名称【顺序查找】
+
+// 请对一个有序数组进行二分查找   [1,34,666,756,849]
+//  先找到中间下标  middle=(left+right)/2, 然后让中间下标的值，和findValue进行比较
+//  如果 arr[middle]>findValue,就应该向 leftIndex--(middle-1)
+//  如果 arr[middle]>findValue,就应该向 leftIndex--(middle-1)
+
+func BinaryFind(arr *[5]int, leftIndex, rightIndex, findValue int) {
+	fmt.Println("before sort", *arr)
+
+	if leftIndex > rightIndex {
+		fmt.Println("没有找到")
+		return
+	}
+	middle := (leftIndex + rightIndex) / 2
+	if (*arr)[middle] > findValue {
+		BinaryFind(arr, leftIndex, middle-1, findValue)
+	} else if (*arr)[middle] < findValue {
+		BinaryFind(arr, middle+1, rightIndex, findValue)
+	} else {
+		fmt.Printf("find it , %v\n", middle)
+	}
+
 }
