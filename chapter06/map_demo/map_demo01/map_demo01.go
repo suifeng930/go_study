@@ -23,4 +23,32 @@ func main() {
 	//1. map在使用前一定要使用make() 初始化内存空间
 	//2. map中的key 不能重复，如果重复了，会覆盖value的值
 
+	// map切片
+	// 如果切片的数据类型是map,则被称之为 slice of map,这样就能实现map的动态变化了
+
+	//声明一个slice mqp
+	var masters []map[string]string
+	masters = make([]map[string]string, 2)
+
+	if masters[0] == nil {
+		masters[0] = make(map[string]string, 2)
+		masters[0]["name"] = "六魔王"
+		masters[0]["age"] = "500"
+	}
+
+	if masters[1] == nil {
+		masters[1] = make(map[string]string, 2)
+		masters[1]["name"] = "玉兔精"
+		masters[1]["age"] = "500"
+	}
+	fmt.Println(masters)
+	// 先定义一个 map
+	newMasters := map[string]string{
+		"name": "火云邪神",
+		"age":  "120",
+	}
+	// 使用 append方法使用
+	masters = append(masters, newMasters)
+	fmt.Println(masters)
+
 }
