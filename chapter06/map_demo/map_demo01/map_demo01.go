@@ -47,7 +47,7 @@ func main() {
 		"name": "火云邪神",
 		"age":  "120",
 	}
-	// 使用 append方法使用
+	// 使用 append方法使用 其实就是将slice 的value  变成了 map ，做动态map追加，其实就是对slice追加
 
 	masters = append(masters, newMasters)
 	fmt.Println(masters)
