@@ -48,6 +48,7 @@ func main() {
 		"age":  "120",
 	}
 	// 使用 append方法使用
+
 	masters = append(masters, newMasters)
 	fmt.Println(masters)
 
