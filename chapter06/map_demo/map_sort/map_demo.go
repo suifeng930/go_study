@@ -31,7 +31,6 @@ func main() {
 	for _, value := range keys {
 		fmt.Printf("map1[%v]=%v \n", value, map1[value])
 	}
-
 	// map的使用细节
 
 	// 1. map是引用类型，遵守引用类型传递的机制，在一个函数接受map,修改后，会直接修改原来的map
