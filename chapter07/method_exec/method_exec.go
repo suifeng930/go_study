@@ -9,7 +9,7 @@ import "fmt"
 func main() {
 	var c Circle
 	c.Radius = 12.4
-	c.Area()
+	c.Area() //
 
 }
 
