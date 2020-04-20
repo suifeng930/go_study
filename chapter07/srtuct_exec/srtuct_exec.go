@@ -42,7 +42,7 @@ func main() {
 		Skill: "牛角功",
 	}
 	fmt.Println("monstar ", monstar)
-	//将变量序列化成 json格式
+	//将变量序列化成 json格式  这里使用到了反射机制
 	bytes, e := json.Marshal(monstar)
 	if e != nil {
 		fmt.Println("序列化数据错误")
