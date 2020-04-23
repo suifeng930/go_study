@@ -23,7 +23,6 @@ func (account *Account) Deposite(money float64, pwd string) {
 	}
 	account.Balance += money
 	fmt.Println("存款成功")
-
 }
 
 func (account *Account) Query(pwd string) {
