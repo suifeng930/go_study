@@ -18,8 +18,9 @@ import "fmt"
 
 type person struct {
 	Name string
-	age  int
-	sal  float64
+
+	age int
+	sal float64
 }
 
 func NewPerson(name string) *person {
