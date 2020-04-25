@@ -56,6 +56,7 @@ func (p Phone) Stop() {
 // 实现usb的方法
 func (p Camera) Start() {
 	fmt.Println(" 相机开始工作。。。")
+
 }
 
 // 实现usb的方法

@@ -25,6 +25,7 @@ func main() {
 	fmt.Println(b)
 
 	fmt.Println("类型断言的其他案例")
+
 	var xs interface{}
 	var b2 float32 = 13.3
 	xs = b2 // 空接口可以接受任意类型

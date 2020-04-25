@@ -21,6 +21,7 @@ func main() {
 	var computer Computer
 	for key := range UsbArr {
 		fmt.Printf("--------%v---------\n", UsbArr[key])
+
 		computer.Working(UsbArr[key])
 
 	}
