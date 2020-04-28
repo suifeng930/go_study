@@ -23,6 +23,15 @@ func NewCustomer(id int, name string, gender string, age int, phone string, emai
 		Email:  email,
 	}
 }
+func NewCustomerNOID(name string, gender string, age int, phone string, email string) Customer {
+	return Customer{
+		Name:   name,
+		Gender: gender,
+		Age:    age,
+		Phone:  phone,
+		Email:  email,
+	}
+}
 
 // 返回用户信息
 func (this Customer) GetInfo() string {

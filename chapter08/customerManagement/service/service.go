@@ -24,3 +24,14 @@ func (this *CustomerService) List() []model.Customer {
 	return this.custmers
 
 }
+
+// 新增一个客户信息
+func (this *CustomerService) AddCustomer(customer model.Customer) bool {
+
+	this.customerNum += 1
+	customer.Id = this.customerNum
+	this.custmers = append(this.custmers, customer)
+
+	return true
+
+}

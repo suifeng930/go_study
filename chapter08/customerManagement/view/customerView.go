@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"go_study/chapter08/customerManagement/model"
 	"go_study/chapter08/customerManagement/service"
 )
 
@@ -28,6 +29,36 @@ func (this *CustomerView) list() {
 	fmt.Printf("--------------------客户列表完成--------------------------\n\n")
 }
 
+func (this *CustomerView) AddCustomer() {
+	// 获取 当前的所有客户信息(在切片中)
+	// 显示客户列表
+	fmt.Println("--------------------添加客户--------------------------------")
+	fmt.Println("姓名")
+	name := ""
+	fmt.Scanln(&name)
+	fmt.Println("性别")
+	gender := ""
+	fmt.Scanln(&gender)
+	fmt.Println("年龄")
+	age := 0
+	fmt.Scanln(&age)
+	fmt.Println("电话")
+	phone := ""
+	fmt.Scanln(&phone)
+	fmt.Println("邮箱")
+	email := ""
+	fmt.Scanln(&email)
+	customer := model.NewCustomerNOID(name, gender, age, phone, email)
+	if this.customerService.AddCustomer(customer) {
+
+		fmt.Printf("--------------------添加客户成功--------------------------\n\n")
+	} else {
+
+		fmt.Printf("--------------------添加客户失败--------------------------\n\n")
+	}
+
+}
+
 func (this *CustomerView) mainMenu() {
 	for {
 		fmt.Println("-------------------客户信息管理软件-----------------------")
@@ -40,7 +71,7 @@ func (this *CustomerView) mainMenu() {
 		fmt.Scanln(&this.key)
 		switch this.key {
 		case "1":
-			fmt.Println("添加客户")
+			this.AddCustomer()
 		case "2":
 			fmt.Println("修改客户")
 		case "3":
