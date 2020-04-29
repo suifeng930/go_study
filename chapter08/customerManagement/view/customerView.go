@@ -13,6 +13,46 @@ type CustomerView struct {
 
 }
 
+func (this *CustomerView) DeleteCustomer() {
+	fmt.Println("--------------------删除客户--------------------------------")
+	fmt.Println("请选择你要删除的客户编码(-1)退出")
+	id := -1
+	fmt.Scanln(&id)
+	if id == -1 {
+		return //放弃删除操作
+	}
+	fmt.Println("确认是否删除(Y/n)")
+	choice := ""
+	fmt.Scanln(&choice)
+
+	if choice == "Y" {
+		//调用 删除方法
+		byId := this.customerService.DeleteById(id)
+		if byId {
+			fmt.Println("--------删除成功--------")
+		} else {
+			fmt.Println("--------删除失败--------")
+		}
+	}
+
+}
+
+func (this *CustomerView) exit() {
+	fmt.Println("确认退出(Y/N):")
+	for {
+		fmt.Scanln(&this.key)
+		if this.key == "Y" || this.key == "N" {
+			break
+
+		}
+		fmt.Println("您的输入有误，请确认是否退出(Y/N):")
+	}
+	if this.key == "Y" {
+		this.loop = false
+	}
+
+}
+
 // 显示所有的客户信息
 func (this *CustomerView) list() {
 	// 获取 当前的所有客户信息(在切片中)
@@ -59,6 +99,40 @@ func (this *CustomerView) AddCustomer() {
 
 }
 
+func (this *CustomerView) UpdateCustomer() {
+	// 获取 当前的所有客户信息(在切片中)
+	// 显示客户列表
+	fmt.Println("--------------------修改客户--------------------------------")
+	fmt.Println("要修改的用户编号为：")
+	id := -1
+	fmt.Scanln(&id)
+
+	fmt.Println("姓名:")
+	name := ""
+	fmt.Scanln(&name)
+	fmt.Println("性别 :")
+	gender := ""
+	fmt.Scanln(&gender)
+	fmt.Println("年龄:")
+	age := 0
+	fmt.Scanln(&age)
+	fmt.Println("电话 : ")
+	phone := ""
+	fmt.Scanln(&phone)
+	fmt.Println("邮箱: ")
+	email := ""
+	fmt.Scanln(&email)
+	customer := model.NewCustomer(id, name, gender, age, phone, email)
+	if this.customerService.UpdateById(customer) {
+
+		fmt.Printf("--------------------修改客户成功--------------------------\n\n")
+	} else {
+
+		fmt.Printf("--------------------修改客户失败--------------------------\n\n")
+	}
+
+}
+
 func (this *CustomerView) mainMenu() {
 	for {
 		fmt.Println("-------------------客户信息管理软件-----------------------")
@@ -73,13 +147,13 @@ func (this *CustomerView) mainMenu() {
 		case "1":
 			this.AddCustomer()
 		case "2":
-			fmt.Println("修改客户")
+			this.UpdateCustomer()
 		case "3":
-			fmt.Println("删除客户")
+			this.DeleteCustomer()
 		case "4":
 			this.list()
 		case "5":
-			this.loop = false
+			this.exit()
 
 		}
 		if !this.loop {
