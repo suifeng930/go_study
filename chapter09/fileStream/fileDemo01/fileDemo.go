@@ -12,6 +12,7 @@ import "os"
 func main() {
 
 	//打开文件的方法
+
 	fileName := "D:/Java/GOPATH/src/go_study/chapter08/testProject/main.go"
 	file, err := os.Open(fileName)
 	if err != nil {
