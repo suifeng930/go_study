@@ -8,7 +8,6 @@ import (
 
 // 写文件的基本使用
 func main() {
-
 	filePath := "D:/GO/test.txt"
 	// 创建一个新文件，写入内容为 hello ,goland
 	createFile(filePath)
