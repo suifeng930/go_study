@@ -12,6 +12,8 @@ func main() {
 	unMarshaltoStruct()
 	unMarshaltoMap()
 	unMarshaltoSlice()
+	// 注意事项：
+	//1.  在反序列化时，要保证
 
 }
 
