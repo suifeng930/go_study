@@ -12,4 +12,5 @@ func main() {
 	numCPU := runtime.NumCPU()
 	runtime.GOMAXPROCS(numCPU)
 	fmt.Println("cpuNum :", numCPU)
+
 }
