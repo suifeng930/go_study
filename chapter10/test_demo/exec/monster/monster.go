@@ -19,6 +19,7 @@ func (this *Monster) Store() bool {
 		fmt.Println("json marshal fail :", err)
 		return false
 	}
+
 	// 再保存到文件
 	filePath := "../monster.json"
 	err = ioutil.WriteFile(filePath, data, 0666)
