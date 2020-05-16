@@ -12,6 +12,13 @@ func main() {
 	var num int
 	reflectTest01(num)
 
+	fmt.Println("======================反射 struct ================")
+	student := Student{
+		Name: "tom",
+		Age:  123,
+	}
+	reflect02(student)
+
 }
 
 type Student struct {
@@ -35,4 +42,23 @@ func reflectTest01(b interface{}) {
 	num := Interface.(int)
 	fmt.Println("num =", num)
 
+}
+
+//反射用例 对struct的用法
+func reflect02(b interface{}) {
+	// 1. 先获取reflect.Type
+	rType := reflect.TypeOf(b)
+	fmt.Println("rType =", rType)
+
+	//2. 获取到reflect.value
+	rValue := reflect.ValueOf(b)
+	fmt.Printf("rValue =%v rrValue type= %T\n", rValue, rValue)
+	// 将value 转化interface（）
+	iV := rValue.Interface()
+	fmt.Printf("iv =%v iV type = %T\n", iV, iV)
+	// 获取到struct的类型，需要使用类型断言机制
+	student, ok := iV.(Student)
+	if ok {
+		fmt.Println("使用类型断言获取，student=", student.Name)
+	}
 }
