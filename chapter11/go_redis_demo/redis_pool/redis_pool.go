@@ -1,6 +1,9 @@
 package main
 
-import "github.com/garyburd/redigo/redis"
+import (
+	"fmt"
+	"github.com/garyburd/redigo/redis"
+)
 
 // redis 连接池
 //  1.事先初始化一定数量的连接，放入到链接池中
@@ -8,11 +11,28 @@ import "github.com/garyburd/redigo/redis"
 //  1.这样可以节省临时获取redis连接的时间，从而提高效率
 func main() {
 
+	//先从 pool中取出一个连接
+	redisInit()
+	conn := pool.Get()
+	defer pool.Close() //一旦关闭连接池，就不能从连接池中再取出连接
+	_, err := conn.Do("Set", "name", "tom cat")
+	if err != nil {
+		fmt.Println("conn.do err", err)
+		return
+	}
+	//取出
+	do, err := redis.String(conn.Do("Get", "name"))
+	if err != nil {
+		fmt.Println("get name fail ", err)
+		return
+	}
+	fmt.Println("get name  ===", do)
+
 }
 
 var pool *redis.Pool
 
-func redisInit(pool *redis.Pool) {
+func redisInit() {
 
 	pool = &redis.Pool{
 		Dial: func() (conn redis.Conn, e error) { // 初始化连接的代码，指定连接那个ip的redis
@@ -26,6 +46,5 @@ func redisInit(pool *redis.Pool) {
 		MaxConnLifetime: 0,
 	}
 	//get := pool.Get() //从连接池中取出一个连接
-	defer pool.Close() //一旦关闭连接池，就不能从连接池中再取出连接
 
 }
