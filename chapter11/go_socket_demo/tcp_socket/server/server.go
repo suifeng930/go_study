@@ -31,7 +31,6 @@ func main() {
 			fmt.Printf("Accept() success conn=%v   client Ip=%v\n", conn, conn.RemoteAddr())
 		}
 		//这里准备其中一个协程，为客户端服务
-
 		go Process(conn)
 
 	}
