@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go_study/chapter11/chatRoom/client"
+	"go_study/chapter11/chatRoom/client/login"
 )
 
 var userId int
@@ -43,7 +43,7 @@ func main() {
 		fmt.Println("请输入用户的密码")
 		fmt.Scanf("%s\n", &userKey)
 		//先把登录的用户函数，写到另外一个文件中 login.go
-		err := client.Login(userId, userKey)
+		err := login.Login(userId, userKey)
 		if err != nil {
 			fmt.Println("登录失败")
 		} else {

@@ -3,7 +3,7 @@ package process
 import (
 	"fmt"
 	"go_study/chapter11/chatRoom/common/message"
-	"go_study/chapter11/chatRoom/utils"
+	"go_study/chapter11/chatRoom/server/utils"
 	"io"
 	"net"
 )

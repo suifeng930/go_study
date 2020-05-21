@@ -1,11 +1,11 @@
-package client
+package login
 
 import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"go_study/chapter11/chatRoom/client/utils"
 	"go_study/chapter11/chatRoom/common/message"
-	"go_study/chapter11/chatRoom/utils"
 	"net"
 )
 
@@ -13,9 +13,6 @@ import (
 func Login(userId int, passWard string) (err error) {
 
 	//开始定义协议
-	//fmt.Printf("userId =%d userpass =%s\n", userId, passWard)
-	//
-	//return nil
 
 	// 连接到服务器端
 	conn, err := net.Dial("tcp", "0.0.0.0:8889")
