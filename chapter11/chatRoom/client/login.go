@@ -69,7 +69,11 @@ func Login(userId int, passWard string) (err error) {
 		return
 	}
 	// 这里还需要处理服务器端返回的消息
-	mes2, err := utils.ReadPkg(conn)
+	tf := &utils.Transfer{
+		Conn: conn,
+		Buf:  [8096]byte{},
+	}
+	mes2, err := tf.ReadPkg()
 	if err != nil {
 		fmt.Println(" utils.ReadPkg(conn) fail ", err)
 		return

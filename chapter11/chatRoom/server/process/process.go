@@ -9,6 +9,7 @@ import (
 )
 
 // server端总的处理器
+//              1.根据客户端的请求，调用对应的处理器，完成响应的任务操作
 type Processor struct {
 	Conn net.Conn //tcp 连接
 }

@@ -9,6 +9,11 @@ import (
 )
 
 // 处理用户登录相关的handler
+//           1.处理和用户相关的请求
+//           2.用户登录
+//           3.用户注册
+//           4.用户注销
+//           5.用户列表管理
 type UserProcess struct {
 	Conn net.Conn // tcp 连接
 

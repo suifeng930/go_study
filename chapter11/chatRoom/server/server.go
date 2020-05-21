@@ -6,6 +6,10 @@ import (
 	"net"
 )
 
+// 负责 ：
+//      1.监听Server端口
+//      2.等待客户端的连接
+//      3.初始化部分工作
 func main() {
 
 	fmt.Println("服务器在8880端口监听")
@@ -35,10 +39,9 @@ func main() {
 //处理和客户端的通讯
 func Process(conn net.Conn) {
 	// 读取客户端发送的信息
-
 	//  todo 这里需要延时关闭
 	defer conn.Close()
-	//创建一个总控开环
+	//创建一个总控开关
 	processor := &process.Processor{Conn: conn}
 	err := processor.Handler()
 	if err != nil {
