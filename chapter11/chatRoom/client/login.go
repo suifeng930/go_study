@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"go_study/chapter11/chatRoom/common/message"
+	"go_study/chapter11/chatRoom/utils"
 	"net"
 )
 
@@ -68,6 +69,24 @@ func Login(userId int, passWard string) (err error) {
 		return
 	}
 	// 这里还需要处理服务器端返回的消息
+	mes2, err := utils.ReadPkg(conn)
+	if err != nil {
+		fmt.Println(" utils.ReadPkg(conn) fail ", err)
+		return
+	}
+	//mes2.Data 将mes.data 反序列化成为loginResMes
+	var loginResMes message.LoginResMes
+	err = json.Unmarshal([]byte(mes2.Data), &loginResMes)
+	if err != nil {
+		fmt.Println(" json.Unmarshal([]byte(mes2.Data), &loginResMes) fail ", err)
+		return
+	}
+
+	if loginResMes.Code == 200 {
+		fmt.Println(" 用户登录成功")
+	} else {
+		fmt.Println("用户登录失败 :", loginResMes.Error)
+	}
 
 	return
 
