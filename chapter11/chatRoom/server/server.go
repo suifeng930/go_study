@@ -2,15 +2,23 @@ package main
 
 import (
 	"fmt"
+	"go_study/chapter11/chatRoom/server/model"
 	"go_study/chapter11/chatRoom/server/process"
 	"net"
+	"time"
 )
 
 // 负责 ：
 //      1.监听Server端口
 //      2.等待客户端的连接
 //      3.初始化部分工作
+
 func main() {
+
+	// 初始化 redis 连接池
+	model.InitPool("localhost:6379", 300*time.Second, 16, 0)
+	//初始化 userDao
+	InitUserDao()
 
 	fmt.Println("服务器在8880端口监听")
 	listen, err := net.Listen("tcp", "0.0.0.0:8889")
@@ -49,4 +57,10 @@ func Process(conn net.Conn) {
 		return
 	}
 
+}
+
+//完成对UserDao的初始化任务
+func InitUserDao() {
+	//redis pool  来自于 initRedisPool
+	model.MyUserDao = model.NewUserDao(model.Pool)
 }

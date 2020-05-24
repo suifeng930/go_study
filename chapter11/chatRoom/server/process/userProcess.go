@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"go_study/chapter11/chatRoom/common/message"
+	"go_study/chapter11/chatRoom/server/model"
 	"go_study/chapter11/chatRoom/server/utils"
 	"net"
 )
@@ -35,14 +36,20 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	var loginResMes message.LoginResMes
 
 	// 2.判断用户是否合法
-	if loginMes.UserId == 1000 && loginMes.UserPwd == "123456" {
-		// 用户合法
-		loginResMes.Code = 200
-	} else {
+	//  去redis 中查询数据 验证数据的合法性
+	user, err := model.MyUserDao.Login(loginMes.UserId, loginMes.UserPwd)
+	if err != nil {
+		// 存在错误
 		//不合法
+		// todo    我们先测试成功，然后再根据返回具体错误信息
 		loginResMes.Code = 500
 		loginResMes.Error = "用户不存在，请注册再使用"
+	} else {
+		// 用户合法
+		loginResMes.Code = 200
+
 	}
+	fmt.Println("用户登录成功 ：", user)
 	//3. 序列化 返回数据结构体
 	data, err := json.Marshal(loginResMes)
 	if err != nil {

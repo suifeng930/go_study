@@ -1,1 +1,62 @@
 package process
+
+import (
+	"fmt"
+	"go_study/chapter11/chatRoom/client/utils"
+	"net"
+)
+import "os"
+
+//1.显示登录成功页面
+//1.保持和服务器的通讯
+//1.当读取服务器发送的消息后，就会显示在页面上
+
+//显示登录成功后的页面
+func ShowMenu() {
+	fmt.Println("----------------恭喜xxx登录成功-----------------------")
+	fmt.Println("1.显示在线列表")
+	fmt.Println("2.发送消息")
+	fmt.Println("3.信息列表")
+	fmt.Println("4.退出系统")
+	fmt.Println("请选择(1~4):")
+	var key int
+	fmt.Scanf("%d\n", &key)
+	switch key {
+	case 1:
+		fmt.Println("显示在线用户列表")
+	case 2:
+		fmt.Println("发送消息")
+	case 3:
+		fmt.Println("信息列表")
+	case 4:
+		fmt.Println("你选择 退出了系统....")
+		os.Exit(0)
+	default:
+		fmt.Println("你的输入有误，请重新输入")
+
+	}
+
+}
+
+// 和服务器端保持通讯
+func ServerProcessMes(conn net.Conn) {
+
+	//创建一个transfer ,不停的读取源服务器发送的消息
+	tf := &utils.Transfer{
+		Conn: conn,
+		Buf:  [8096]byte{},
+	}
+	for {
+		fmt.Println(" 客户端  %s  正在等待读取服务器发送的消息\n")
+		mes, err := tf.ReadPkg()
+		if err != nil {
+			fmt.Println("tf.ReadPkg() fail : ", err)
+			return
+
+		}
+		// 如果读到消息， 又是下一步操作
+		fmt.Println("mes=", mes)
+
+	}
+
+}
