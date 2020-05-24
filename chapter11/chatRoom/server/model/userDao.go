@@ -28,8 +28,8 @@ func NewUserDao(redisPool *redis.Pool) (userDao *UserDao) {
 //根据用户id  返回一个user实例
 func (this *UserDao) GetUserById(conn redis.Conn, userId int) (user *User, err error) {
 
-	//  通过给定的id , 去redis 查询这恶鬼用户
-	reply, err := redis.String(conn.Do("HSet", "users", userId))
+	//  通过给定的id , 去redis 查询这用户
+	reply, err := redis.String(conn.Do("HGet", "users", userId))
 	if err != nil {
 		// 报错
 		if err == redis.ErrNil {

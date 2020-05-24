@@ -42,8 +42,18 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 		// 存在错误
 		//不合法
 		// todo    我们先测试成功，然后再根据返回具体错误信息
-		loginResMes.Code = 500
-		loginResMes.Error = "用户不存在，请注册再使用"
+		if err == model.ERROR_USER__NOTEXIST {
+
+			loginResMes.Code = 500
+			loginResMes.Error = err.Error()
+		} else if err == model.ERROR_USER__Pwd {
+			loginResMes.Code = 403
+			loginResMes.Error = err.Error()
+
+		} else {
+			loginResMes.Code = 505
+			loginResMes.Error = "服务器内部错误"
+		}
 	} else {
 		// 用户合法
 		loginResMes.Code = 200
