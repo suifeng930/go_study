@@ -16,7 +16,8 @@ import (
 //           4.用户注销
 //           5.用户列表管理
 type UserProcess struct {
-	Conn net.Conn // tcp 连接
+	Conn   net.Conn // tcp 连接
+	UserId int      // 表示conn 属于谁
 
 }
 
