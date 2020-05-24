@@ -22,13 +22,19 @@ func ShowMenu() {
 	fmt.Println("4.退出系统")
 	fmt.Println("请选择(1~4):")
 	var key int
+	var content string
+
+	//创建 一个smsProcess 实例，因此定义一个实例
+	smsProcess := SmsProcess{}
 	fmt.Scanf("%d\n", &key)
 	switch key {
 	case 1:
 		fmt.Println("显示在线用户列表")
 		OutPutOnlineUser()
 	case 2:
-		fmt.Println("发送消息")
+		fmt.Println("你想对大家说什么？")
+		fmt.Scanf("%s\n", &content)
+		smsProcess.SendGroupMes(content)
 	case 3:
 		fmt.Println("信息列表")
 	case 4:
@@ -42,7 +48,7 @@ func ShowMenu() {
 }
 
 // 和服务器端保持通讯
-func ServerProcessMes(conn net.Conn) {
+func ServerProcessMes(conn net.Conn, currentUser int) {
 
 	//创建一个transfer ,不停的读取源服务器发送的消息
 	tf := &utils.Transfer{
@@ -50,7 +56,7 @@ func ServerProcessMes(conn net.Conn) {
 		Buf:  [8096]byte{},
 	}
 	for {
-		fmt.Println(" 客户端  %s  正在等待读取服务器发送的消息\n")
+		fmt.Printf(" 客户端  %d  正在等待读取服务器发送的消息\n", currentUser)
 		mes, err := tf.ReadPkg()
 		if err != nil {
 			fmt.Println("tf.ReadPkg() fail : ", err)
@@ -71,6 +77,9 @@ func ServerProcessMes(conn net.Conn) {
 			}
 			// 2.把这个用户的信息，保存在客户端的map中
 			UpdateUserStatus(&notifyUserStatusMes)
+		case message.SmsMesType:
+			//有人群发消息，客户端接收数据
+			OutPutGroupMes(&mes)
 		default:
 			fmt.Println("服务器端返回了位置的消息类型")
 

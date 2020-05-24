@@ -32,6 +32,11 @@ func (this *Processor) ServerProcessMessage(mes *message.Message) (err error) {
 		}
 		err := userProcess.ServerProcessRegister(mes)
 		return err
+	case message.SmsMesType:
+		//处理群发消息
+		smsProcess := &SmsProcess{}
+		smsProcess.SendGrroupMes(mes)
+
 	default:
 		fmt.Println("消息类型不存咋，无法处理...")
 	}

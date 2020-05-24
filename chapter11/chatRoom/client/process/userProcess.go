@@ -90,6 +90,11 @@ func (this *UserProcess) Login(userId int, passWard string) (err error) {
 
 	if loginResMes.Code == 200 {
 		fmt.Println(" 用户登录成功")
+
+		// 初始化 curUser
+		CurUser.Conn = conn
+		CurUser.UserId = userId
+		CurUser.UserStatus = message.UserOnline
 		//todo   登录成功，  1.显示登录成功的菜单(循环显示)  2.保持和服务器的通讯操作
 		//  还需要再客户端启动一个协程，用于保持和服务器端的通讯，如果服务器有数据推送给客户端，则接收并显示在客户端的终端
 
@@ -108,8 +113,8 @@ func (this *UserProcess) Login(userId int, passWard string) (err error) {
 			OnlineUsers[value] = user
 
 		}
-		go ServerProcessMes(conn) //接收服务端发送给客户端的数据
-		for {                     //1.显示登录成功的菜单(循环显示)
+		go ServerProcessMes(conn, userId) //接收服务端发送给客户端的数据
+		for {                             //1.显示登录成功的菜单(循环显示)
 			ShowMenu()
 		}
 

@@ -8,6 +8,7 @@ const (
 	RegisterMesType         = "RegisterMes"
 	RegisterResMesType      = "RegisterResMes"
 	NotifyUserStatusMesType = "NotifyUserStatusMes"
+	SmsMesType              = "SmsMes"
 )
 
 //定义几个用户在线状态的常量
@@ -52,4 +53,10 @@ type NotifyUserStatusMes struct {
 	UserId int `json:"userId"` //用户id
 	Status int `json:"status"` //用户在线状态
 
+}
+
+//新增一个smsMes  发送消息结构体
+type SmsMes struct {
+	Content    string `json:"content"` //发送内容
+	model.User        //发送用户
 }

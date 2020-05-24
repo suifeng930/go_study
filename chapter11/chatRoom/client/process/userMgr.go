@@ -2,6 +2,7 @@ package process
 
 import (
 	"fmt"
+	model2 "go_study/chapter11/chatRoom/client/model"
 	"go_study/chapter11/chatRoom/common/message"
 	"go_study/chapter11/chatRoom/server/model"
 )
@@ -10,6 +11,8 @@ import (
 
 //客户端维护的map
 var OnlineUsers map[int]*model.User = make(map[int]*model.User, 10)
+
+var CurUser model2.CurUser //在用户登录成功后，完成对curUser的初始化操作
 
 //编写一个方法处理，服务器返回的信息
 func UpdateUserStatus(mes *message.NotifyUserStatusMes) {
