@@ -7,6 +7,7 @@ import (
 	"go_study/chapter11/chatRoom/client/utils"
 	"go_study/chapter11/chatRoom/common/message"
 	"net"
+	"os"
 )
 
 type UserProcess struct {
@@ -18,7 +19,7 @@ func (this *UserProcess) Login(userId int, passWard string) (err error) {
 	//开始定义协议
 
 	// 连接到服务器端
-	conn, err := net.Dial("tcp", "0.0.0.0:8889")
+	conn, err := ConnServer("0.0.0.0:8889")
 	if err != nil {
 		fmt.Println("net.Dial err=", err)
 		return err
@@ -102,4 +103,73 @@ func (this *UserProcess) Login(userId int, passWard string) (err error) {
 
 	return
 
+}
+
+func (this *UserProcess) Register(userId int, userPwd, userName string) (err error) {
+	conn, err := ConnServer("0.0.0.0:8889")
+	// 延时关闭
+	defer conn.Close()
+	//2. 准备通过conn发送message结构体
+	var mes message.Message
+	mes.Type = message.RegisterMesType
+	//3. 创建一个loginMes
+	var registerMes message.RegisterMes
+	registerMes.User.UserId = userId
+	registerMes.User.UserPwd = userPwd
+	registerMes.User.UserName = userName
+
+	//4.将loginMes 序列化
+	data, err := json.Marshal(registerMes)
+	if err != nil {
+		fmt.Println(" json.Marshal err=", err)
+		return err
+	}
+	//5 把data 付给mess.Data字段
+	mes.Data = string(data)
+	//6.将mes 进行序列化
+	data, err = json.Marshal(mes)
+	if err != nil {
+		fmt.Println(" json.Marshal err=", err)
+		return err
+	}
+
+	//发送数据到 server
+	tf := &utils.Transfer{
+		Conn: conn,
+		Buf:  [8096]byte{},
+	}
+	//发送data
+	err = tf.WritePkg(data)
+	if err != nil {
+		fmt.Println("注册发送信息失败   err:", err)
+	}
+	mes, err = tf.ReadPkg() //register
+	if err != nil {
+		fmt.Println("tf.ReadPkg() fail:", err)
+		return
+	}
+	//将mes 的data部分反序列化成为RegisterResMes
+	var registerResMes message.RegisterResMes
+	err = json.Unmarshal([]byte(mes.Data), &registerMes)
+	if registerResMes.Code == 200 {
+		fmt.Println("用户注册成功，请重新登录...")
+		os.Exit(0) //退出注册
+	} else {
+		fmt.Println(registerResMes.Error)
+		os.Exit(0)
+	}
+
+	return
+
+}
+
+// 指定 server端ip
+func ConnServer(address string) (conn net.Conn, err error) {
+	//conn, err = net.Dial("tcp", "0.0.0.0:8889")
+	conn, err = net.Dial("tcp", address)
+	if err != nil {
+		fmt.Println("net.Dial err=", err)
+		return
+	}
+	return
 }

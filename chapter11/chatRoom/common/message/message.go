@@ -1,8 +1,11 @@
 package message
 
+import "go_study/chapter11/chatRoom/server/model"
+
 const (
 	LoginMesType       = "LoginMes"
 	LoginResMesType    = "LoginResMes"
+	RegisterMesType    = "RegisterMes"
 	RegisterResMesType = "RegisterResMes"
 )
 
@@ -25,7 +28,12 @@ type LoginResMes struct {
 
 }
 
+//用户注册结构体
 type RegisterResMes struct {
+	Code  int    `json:"code"`  // 返回状态码 400 用户已存在  200 表示登录成功
+	Error string `json:"error"` //返回错误信息
+}
 
-	// 注册
+type RegisterMes struct {
+	User model.User `json:"user"` //注册用户结构体
 }

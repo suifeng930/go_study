@@ -6,7 +6,7 @@ import (
 )
 
 var userId int
-var userKey string
+var userKey, userName string
 
 func main() {
 
@@ -34,6 +34,16 @@ func main() {
 
 		case 2:
 			fmt.Println("注册用户")
+			fmt.Println("请输入用户id")
+			fmt.Scanf("%d\n", &userId)
+			fmt.Println("请输入用户的密码")
+			fmt.Scanf("%s\n", &userKey)
+			fmt.Println("请输入用户名")
+			fmt.Scanf("%s\n", &userName)
+			// 调用User Process 完成用户注册的请求
+			userProcess := &process.UserProcess{}
+			userProcess.Register(userId, userKey, userName)
+
 		case 3:
 			fmt.Println("退出系统")
 		default:
