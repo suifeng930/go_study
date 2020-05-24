@@ -92,6 +92,15 @@ func (this *UserProcess) Login(userId int, passWard string) (err error) {
 		//todo   登录成功，  1.显示登录成功的菜单(循环显示)  2.保持和服务器的通讯操作
 		//  还需要再客户端启动一个协程，用于保持和服务器端的通讯，如果服务器有数据推送给客户端，则接收并显示在客户端的终端
 
+		// 显示当前在线用户列表
+		fmt.Println("当前在线用户列表如下：")
+		for _, value := range loginResMes.UserIds {
+			if value == userId { // 不显示当前用户在线
+				continue
+			}
+			fmt.Printf("userId %d \n", value)
+
+		}
 		go ServerProcessMes(conn) //接收服务端发送给客户端的数据
 		for {                     //1.显示登录成功的菜单(循环显示)
 			ShowMenu()

@@ -58,9 +58,16 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	} else {
 		// 用户合法
 		loginResMes.Code = 200
-
+		// todo  用户登录成功， 把登录成功的用户，放到在线用户列表中
+		// 将登录成功的userId 赋值给userProcess
+		this.UserId = loginMes.UserId
+		userMgr.AddOnlineUser(this) //添加在线用户
+		// 将当前在线用户的id,放入到loginResMes.UserId
+		for key, _ := range userMgr.onlineUsersMap {
+			loginResMes.UserIds = append(loginResMes.UserIds, key)
+		}
+		fmt.Println("用户登录成功 ：", user)
 	}
-	fmt.Println("用户登录成功 ：", user)
 	//3. 序列化 返回数据结构体
 	data, err := json.Marshal(loginResMes)
 	if err != nil {
