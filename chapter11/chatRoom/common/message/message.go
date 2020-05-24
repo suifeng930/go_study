@@ -3,10 +3,18 @@ package message
 import "go_study/chapter11/chatRoom/server/model"
 
 const (
-	LoginMesType       = "LoginMes"
-	LoginResMesType    = "LoginResMes"
-	RegisterMesType    = "RegisterMes"
-	RegisterResMesType = "RegisterResMes"
+	LoginMesType            = "LoginMes"
+	LoginResMesType         = "LoginResMes"
+	RegisterMesType         = "RegisterMes"
+	RegisterResMesType      = "RegisterResMes"
+	NotifyUserStatusMesType = "NotifyUserStatusMes"
+)
+
+//定义几个用户在线状态的常量
+const (
+	UserOnline = iota
+	UserOffLine
+	UserBusyStatus //用户繁忙
 )
 
 type Message struct {
@@ -37,4 +45,11 @@ type RegisterResMes struct {
 
 type RegisterMes struct {
 	User model.User `json:"user"` //注册用户结构体
+}
+
+//定义用户在线状态
+type NotifyUserStatusMes struct {
+	UserId int `json:"userId"` //用户id
+	Status int `json:"status"` //用户在线状态
+
 }

@@ -62,6 +62,7 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 		// 将登录成功的userId 赋值给userProcess
 		this.UserId = loginMes.UserId
 		userMgr.AddOnlineUser(this) //添加在线用户
+		this.NotifyOtherOnlineUsers(loginMes.UserId)
 		// 将当前在线用户的id,放入到loginResMes.UserId
 		for key, _ := range userMgr.onlineUsersMap {
 			loginResMes.UserIds = append(loginResMes.UserIds, key)
@@ -152,4 +153,55 @@ func (this *UserProcess) ServerProcessRegister(mes *message.Message) (err error)
 		return
 	}
 	return
+}
+
+// 实现通知所有在线用户的方法
+func (this *UserProcess) NotifyOtherOnlineUsers(currentUserId int) {
+	//遍历用户在线列表 onlineUsers，然后一个个发送那个 notifyUserStatusMes
+	for key, value := range userMgr.onlineUsersMap {
+		//
+		if currentUserId == key {
+			continue
+		}
+		//开始通知 其他用户
+		value.NotifyMeOnline(currentUserId)
+	}
+
+}
+
+//通知用户
+func (this *UserProcess) NotifyMeOnline(userId int) {
+	//组装 notifyUserStatusMes
+	var mes message.Message
+	mes.Type = message.NotifyUserStatusMesType
+	var notifyUserStatus message.NotifyUserStatusMes
+	notifyUserStatus.UserId = userId
+	notifyUserStatus.Status = message.UserOnline
+	//将 notifyUserStatus 序列化
+	data, err := json.Marshal(notifyUserStatus)
+	if err != nil {
+		fmt.Println(" json.Marshal(notifyUserStatus) err:", err)
+		return
+	}
+	//将序列化后的message 赋值给data
+	mes.Data = string(data)
+
+	//将message 序列化
+	data, err = json.Marshal(mes)
+	if err != nil {
+		fmt.Println(" json.Marshal(mes)  err:", err)
+		return
+	}
+
+	// 发送数据
+	tf := &utils.Transfer{
+		Conn: this.Conn,
+		Buf:  [8096]byte{},
+	}
+	err = tf.WritePkg(data)
+	if err != nil {
+		fmt.Println("tf.WritePkg(data) err:", err)
+		return
+	}
+
 }

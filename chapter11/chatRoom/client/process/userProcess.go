@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"go_study/chapter11/chatRoom/client/utils"
 	"go_study/chapter11/chatRoom/common/message"
+	"go_study/chapter11/chatRoom/server/model"
 	"net"
 	"os"
 )
@@ -99,6 +100,12 @@ func (this *UserProcess) Login(userId int, passWard string) (err error) {
 				continue
 			}
 			fmt.Printf("userId %d \n", value)
+			// 完成客户端的onlineUsers 初始化
+			user := &model.User{
+				UserId:     value,
+				UserStatus: message.UserOnline,
+			}
+			OnlineUsers[value] = user
 
 		}
 		go ServerProcessMes(conn) //接收服务端发送给客户端的数据
