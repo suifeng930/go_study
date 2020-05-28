@@ -23,11 +23,7 @@ func main() {
 		name:     "林冲",
 		nickName: "豹子头",
 	}
-	hero04 := &HeroNode{
-		no:       3,
-		name:     "吴用",
-		nickName: "智多星",
-	}
+
 	//3.添加到链表的尾部
 	//InsertHeroNode(head, hero01)
 	//InsertHeroNode(head, hero02)
@@ -35,8 +31,12 @@ func main() {
 	InsertHeroNode2(head, hero03)
 	InsertHeroNode2(head, hero01)
 	InsertHeroNode2(head, hero02)
-	InsertHeroNode2(head, hero04)
 	//4. 显示链表
+	ListHeroNode(head)
+
+	// 5.  删除一个结点
+	fmt.Println()
+	DeleteHeroNode(head, 3)
 	ListHeroNode(head)
 }
 
@@ -114,6 +114,31 @@ func ListHeroNode(head *HeroNode) {
 		if temp.next == nil {
 			break
 		}
+	}
+
+}
+
+// 删除链表的一个结点
+func DeleteHeroNode(head *HeroNode, deleteId int) {
+	temp := head
+	flag := false
+	for {
+		if temp.next == nil { //说明到链表的最后
+			break
+
+		} else if temp.next.no == deleteId { //找到要删除的结点
+			flag = true
+			break
+		}
+		temp = temp.next
+
+	}
+
+	if flag {
+		//删除结点
+		temp.next = temp.next.next
+	} else {
+		fmt.Printf("sorry,你要删除的id %d 不存在\n", deleteId)
 	}
 
 }
