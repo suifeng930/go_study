@@ -48,6 +48,7 @@ func AddBoy(num int) *Boy {
 		}
 	}
 	return first
+
 }
 
 func ShowBoy(firstBoy *Boy) {
