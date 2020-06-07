@@ -20,6 +20,12 @@ func main() {
 	stack.Push(5)
 	//显示
 	stack.ShowStack()
+	fmt.Println("出栈......")
+	val, err := stack.Pop()
+	if err != nil {
+		fmt.Printf("出栈val =%d \n ", val)
+	}
+	fmt.Printf("出栈val =%d \n ", val)
 
 }
 
@@ -29,6 +35,7 @@ type Stack struct {
 	arr    [5]int //数组模拟栈
 }
 
+//进栈
 func (this *Stack) Push(val int) (err error) {
 
 	//先判断栈是否满了
@@ -51,5 +58,19 @@ func (this *Stack) ShowStack() {
 	for curTop := this.Top; curTop >= 0; curTop-- {
 		fmt.Printf("arr[%d]=%d \n", curTop, this.arr[curTop])
 	}
+
+}
+
+//出栈
+func (this *Stack) Pop() (val int, err error) {
+	//判断是否为空
+	if this.Top == -1 {
+		fmt.Println(" stack empty ...")
+		return 0, errors.New("stack empty")
+	}
+	//先取值，再this.Top--
+	val = this.arr[this.Top]
+	this.Top--
+	return val, nil
 
 }
